@@ -43,3 +43,12 @@ ENV/
 .vscode/
 *.swp
 *.swo
+
+# /data以下の全てのファイルを無視
+/data/**/*.*
+
+# /data以下の隠しファイルも無視
+/data/**/*.*
+
+# !をつけることで、.gitkeepファイルだけは例外として追跡対象にする
+!/data/**/.gitkeep
