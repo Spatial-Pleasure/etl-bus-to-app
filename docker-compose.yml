@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  etl:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    volumes:
+      - .:/app
+      - ./data:/app/data
+    env_file:
+      - .env
+    ports:
+      - "8888:8888"  # Jupyter Notebook用
+    command: jupyter lab --ip 0.0.0.0 --port 8888 --no-browser --allow-root --NotebookApp.token=''
