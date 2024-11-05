@@ -89,6 +89,23 @@ tests/:
 
 ## 使用方法
 
+1．開発環境の起動
+```
+# コンテナの起動
+docker-compose up -d etl-dev
+
+# Jupyter Labを必要なときに起動
+docker-compose exec etl-dev jupyter lab --ip 0.0.0.0 --port 8888 --no-browser --allow-root --NotebookApp.token=''
+
+# コンテナ内でコマンドを実行
+docker-compose exec etl-dev bash
+```
+2. 本番環境のテスト
+```
+# ETL処理の実行
+docker-compose up etl-prod
+```
+
 ## 設定
 
 - 環境変数の説明

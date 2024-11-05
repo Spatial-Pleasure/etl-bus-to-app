@@ -1,15 +1,24 @@
 version: '3.8'
 
 services:
-  etl:
+  etl-dev:
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/dev/Dockerfile
     volumes:
       - .:/app
       - ./data:/app/data
-    env_file:
-      - .env
+    env_file: .env
     ports:
-      - "8888:8888"  # Jupyter Notebook用
-    command: jupyter lab --ip 0.0.0.0 --port 8888 --no-browser --allow-root --NotebookApp.token=''
+      - "8888:8888"
+    command: tail -f /dev/null
+
+  etl-prod:
+    build:
+      context: .
+      dockerfile: docker/prod/Dockerfile
+    volumes:
+      - .:/app
+      - ./data:/app/data
+    env_file: .env
+    command: python src/main.py
