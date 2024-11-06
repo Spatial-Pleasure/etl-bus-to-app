@@ -1,0 +1,84 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [139.766084, 35.681167], // 始点（渋谷駅）
+          [139.766086, 35.681365], 
+          [139.766088, 35.681563]  // 終点（新宿駅）
+        ]
+      },
+      "properties": {
+        "route_id": "route_1",
+        "route_name": "渋谷駅 - 新宿駅",
+        "color": "#ff0000",
+        "metrics": {  // 路線全体の指標を年月ごとにネスト
+          "202401": {
+            "emissions": 100, // 路線全体のCO2排出量
+            "od_distance": {  // OD距離を交通手段別にネスト
+              "car": 10000,
+              "motorbike": 5000,
+              "train": 20000,
+              "non_emission": 1000
+            },
+            "environmental_value": {  // 環境価値を交通手段別にネスト
+              "car": 500,
+              "motorbike": 250,
+              "train": 1000,
+              "non_emission": 0 
+            }
+          },
+          "202402": {
+            // ... 2024年2月分のデータ
+          }
+          // ...
+        },
+        "stops": [
+          {
+            "stop_id": "stop_1",
+            "stop_name": "渋谷駅",
+            "coordinates": [139.766084, 35.681167],
+            "metrics": {  // 停留所ごとの指標を年月ごとにネスト
+              "202401": {
+                "passengers_on": 1000,  // 乗車した人数
+                "passengers_off": 900, // 降車した人数
+                "revenue": 50000,      // 運賃収入
+                "cost": 10000,        // コスト
+                "average_passenger_density": 20, // 平均乗車密度
+                "emissions": 0         // 始発停留所なので排出量は0
+              },
+              "202402": {
+                // ... 2024年2月分のデータ
+              }
+              // ...
+            }
+          },
+          {
+            "stop_id": "stop_2",
+            "stop_name": "新宿駅",
+            "coordinates": [139.766088, 35.681563],
+            "metrics": {  // 停留所ごとの指標を年月ごとにネスト
+              "202401": {
+                "passengers_on": 1100,  // 乗車した人数
+                "passengers_off": 1000, // 降車した人数
+                "revenue": 55000,      // 運賃収入
+                "cost": 11000,        // コスト
+                "average_passenger_density": 22, // 平均乗車密度
+                "emissions": 50        // 前の停留所からのCO2排出量
+              },
+              "202402": {
+                // ... 2024年2月分のデータ
+              }
+              // ...
+            }
+          }
+          // ...
+        ]
+      }
+    }
+    // ...
+  ]
+}

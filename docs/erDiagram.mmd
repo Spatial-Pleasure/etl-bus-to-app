@@ -1,0 +1,101 @@
+erDiagram
+  vehicles ||--o{bus_loc : "1つのvehicle_idは0以上のevent_idを持つ"
+  calendar ||--o{trips: "1つのservice_idは0以上のtrip_idを持つ"
+  trips ||--o{ bus_loc : "1つのtrip_idは0以上のevent_idを持つ"
+  routes ||--o{passengers: "1つのroute_idは0以上のod_idを持つ"
+  routes ||--o{trips: "1つのroute_idは0以上のtrip_idを持つ"
+  stops ||--o{passengers: "1つのstop_idは0以上のfrom_stop_idとto_stop_idを持つ"
+  stops ||--o{bus_loc: "1つのstop_idは0以上のfrom_stop_idとto_stop_idを持つ"
+  agency ||--o{routes: "1つのagency_idは0以上のroute_idを持つ"
+
+  vehicles {
+    vehicle_id str PK "車両ID"
+    vehicle_type str "車両型"
+    fuel_type str "燃料の種類"
+    fuel_efficiency float "燃費"
+    }
+
+  bus_loc {
+    event_id str PK "計測イベントのID"
+    vehicle_id str FK "車両ID (vehiclesのPK)"
+    trip_id str FK "運行ID (tripsのPK)"
+    from_stop_id str FK "出発地の停留所・標柱ID (stoppsのPK)"
+    to_stop_id str FK "目的地の停留所・標柱ID (stoppsのPK)"
+    date YYYYMMDD "データ取得日時 (YYYYMMDD)"
+    time HHMMSS "データ取得時刻 (HHMMSS)"
+    bus_lat float "バスの経度"
+    bus_lon float "バスの緯度"
+    }
+    
+	passengers {
+		od_id str PK "ODのID"
+		route_id str FK "経路ID (routesのPK)"
+		from_stop_id str FK "出発地の停留所・標柱ID (stoppsのPK)"
+		to_stop_id str FK "目的地の停留所・標柱ID (stoppsのPK)"
+		date YYYYMMDD "データ取得日時 (YYYYMMDD)"
+		total_passengers int "乗降客の総数"
+		}
+
+	agency {
+		agency_id str PK "事業者ID"
+		agency_name	str	"事業者名称"
+		agency_url	str	"事業者URL"
+		agency_timezone	str	"タイムゾーン"
+		agnecy_lang	str	"言語"
+		agency_phone	str	"電話番号"
+		agnecy_fare_url	str	"オンライン購入URL （任意）"
+		agency_email str	"事業者Eメール（任意）"
+		}		
+		
+	routes {
+		route_id str PK "経路ID"
+		agency_id str FK "事業者ID (agencyのPK)"
+		route_short_name str "経路略称"
+		route_long_name str "経路名"
+		route_desc str "経路情報（任意）"
+		route_type int "経路タイプ（バス事業者は3）"
+		route_url str "経路URL（任意）"
+		route_color str "経路色（任意）"
+		route_text_color str "経路文字色（任意）"
+		}
+	
+  trips {
+	  trip_id str PK "便ID"
+	  route_id str FK "経路ID (routesのPK)"
+	  service_id str FK "運行日ID (calendarのPK)"
+	  trip_headsign str "便行先（任意）"
+	  trip_short_name str "便名称（任意）"
+	  direction_id str "上下区分（任意）"
+	  block_id str "便結合区分（任意）"
+	  shape_id str "描画ID（任意）"
+	  wheelchair_accesible str "車いす利用区分（任意）"
+	  bikes_allowed str "自転車持込区分（任意）"
+	  }
+
+	calendar {
+		service_id str PK "運行日ID"
+		monday int(1) "月曜日の運行有無"
+		tuesday int(1) "火曜日の運行有無"
+		wednesday int(1) "水曜日の運行有無"
+		thursday int(1) "木曜日の運行有無"
+		friday int(1) "金曜日の運行有無"
+		saturday int(1) "土曜日の運行有無"
+		sunday int(1) "日曜日の運行有無"
+		start_date YYYYMMDD "サービス開始日 (YYYYMMDD)"
+		end_date YYYYMMDD "サービス終了日 (YYYYMMDD)"
+		}
+		
+	stops {
+		stop_id str PK "停留所・標柱ID"
+		stop_code str "停留所・標柱番号"
+		stop_name str "停留所・標柱名称"
+		stop_lat float "停留所・標柱の緯度"
+		stop_lon float "停留所・標柱の経度"
+		zone_id str "運賃エリアID"
+		stop_url str "停留所・標柱URL"
+		location_type int "停留所・標柱区分"
+		parent_station int "親駅情報（任意）"
+		stop_timzezone str "タイムゾーン（入力不要）"
+		wheelchair_boarding int "車いす利用区分（入力不要）"
+		}
+		
